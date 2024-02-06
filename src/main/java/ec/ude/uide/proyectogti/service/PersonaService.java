@@ -6,7 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link ec.ude.uide.proyectogti.domain.Persona}.
+ * Service Interface for managing
+ * {@link ec.ude.uide.proyectogti.domain.Persona}.
  */
 public interface PersonaService {
     /**
@@ -63,4 +64,6 @@ public interface PersonaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<Persona> buscarPersonaCriterio(String criterio, Pageable pageable);
 }

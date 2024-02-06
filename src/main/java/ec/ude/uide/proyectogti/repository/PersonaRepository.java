@@ -41,4 +41,10 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
         "select persona from Persona persona left join fetch persona.estadoCivil left join fetch persona.tipoIdentificacion left join fetch persona.paisProcedencia left join fetch persona.nivelEducativo where persona.id =:id"
     )
     Optional<Persona> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query(
+        value = "select f " + "from Persona f " + "where lower(f.apellidos) like lower(:criterio) " + "order by f.apellidos ",
+        countQuery = "select count(p) " + "from Persona p "
+    )
+    Page<Persona> buscarPersonasCriterio(@Param("criterio") String criterio, Pageable pageable);
 }

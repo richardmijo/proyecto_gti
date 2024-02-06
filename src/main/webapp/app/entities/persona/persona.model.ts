@@ -18,3 +18,7 @@ export interface IPersona {
 }
 
 export type NewPersona = Omit<IPersona, 'id'> & { id: null };
+
+export interface IBusquedaComun {
+  criterio: string;
+}

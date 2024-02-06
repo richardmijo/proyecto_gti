@@ -3,6 +3,7 @@ package ec.ude.uide.proyectogti.web.rest;
 import ec.ude.uide.proyectogti.domain.Persona;
 import ec.ude.uide.proyectogti.repository.PersonaRepository;
 import ec.ude.uide.proyectogti.service.PersonaService;
+import ec.ude.uide.proyectogti.web.request.CriterioBusquedaComun;
 import ec.ude.uide.proyectogti.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +52,9 @@ public class PersonaResource {
      * {@code POST  /personas} : Create a new persona.
      *
      * @param persona the persona to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new persona, or with status {@code 400 (Bad Request)} if the persona has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new persona, or with status {@code 400 (Bad Request)} if the
+     *         persona has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
@@ -70,11 +73,13 @@ public class PersonaResource {
     /**
      * {@code PUT  /personas/:id} : Updates an existing persona.
      *
-     * @param id the id of the persona to save.
+     * @param id      the id of the persona to save.
      * @param persona the persona to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated persona,
-     * or with status {@code 400 (Bad Request)} if the persona is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the persona couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated persona,
+     *         or with status {@code 400 (Bad Request)} if the persona is not valid,
+     *         or with status {@code 500 (Internal Server Error)} if the persona
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
@@ -102,14 +107,17 @@ public class PersonaResource {
     }
 
     /**
-     * {@code PATCH  /personas/:id} : Partial updates given fields of an existing persona, field will ignore if it is null
+     * {@code PATCH  /personas/:id} : Partial updates given fields of an existing
+     * persona, field will ignore if it is null
      *
-     * @param id the id of the persona to save.
+     * @param id      the id of the persona to save.
      * @param persona the persona to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated persona,
-     * or with status {@code 400 (Bad Request)} if the persona is not valid,
-     * or with status {@code 404 (Not Found)} if the persona is not found,
-     * or with status {@code 500 (Internal Server Error)} if the persona couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated persona,
+     *         or with status {@code 400 (Bad Request)} if the persona is not valid,
+     *         or with status {@code 404 (Not Found)} if the persona is not found,
+     *         or with status {@code 500 (Internal Server Error)} if the persona
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
@@ -140,9 +148,11 @@ public class PersonaResource {
     /**
      * {@code GET  /personas} : get all the personas.
      *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of personas in body.
+     * @param pageable  the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is
+     *                  applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of personas in body.
      */
     @GetMapping("")
     public ResponseEntity<List<Persona>> getAllPersonas(
@@ -164,7 +174,8 @@ public class PersonaResource {
      * {@code GET  /personas/:id} : get the "id" persona.
      *
      * @param id the id of the persona to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the persona, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the persona, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
     public ResponseEntity<Persona> getPersona(@PathVariable("id") Long id) {
@@ -187,5 +198,21 @@ public class PersonaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/personas-criterio")
+    public ResponseEntity<List<Persona>> personasPorCriterio(@RequestBody CriterioBusquedaComun request, Pageable pageable) {
+        log.debug("REST funcionalidadesPorCriterio {} " + request.getCriterio());
+
+        String dataSearch = "%%";
+
+        if (request.getCriterio() != null) {
+            dataSearch = "%" + request.getCriterio().toLowerCase() + "%";
+        }
+
+        Page<Persona> page1 = personaService.buscarPersonaCriterio(dataSearch, pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page1);
+        return ResponseEntity.ok().headers(headers).body(page1.getContent());
     }
 }

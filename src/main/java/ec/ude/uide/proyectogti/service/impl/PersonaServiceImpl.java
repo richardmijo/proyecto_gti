@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service Implementation for managing {@link ec.ude.uide.proyectogti.domain.Persona}.
+ * Service Implementation for managing
+ * {@link ec.ude.uide.proyectogti.domain.Persona}.
  */
 @Service
 @Transactional
@@ -97,5 +98,10 @@ public class PersonaServiceImpl implements PersonaService {
     public void delete(Long id) {
         log.debug("Request to delete Persona : {}", id);
         personaRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Persona> buscarPersonaCriterio(String criterio, Pageable pageable) {
+        return personaRepository.buscarPersonasCriterio(criterio, pageable);
     }
 }

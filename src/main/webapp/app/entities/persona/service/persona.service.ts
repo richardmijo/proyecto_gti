@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IPersona, NewPersona } from '../persona.model';
+import { IBusquedaComun, IPersona, NewPersona } from '../persona.model';
 
 export type PartialUpdatePersona = Partial<IPersona> & Pick<IPersona, 'id'>;
 
@@ -100,6 +100,15 @@ export class PersonaService {
       return [...personasToAdd, ...personaCollection];
     }
     return personaCollection;
+  }
+
+  async buscarFuncionalidadesCriterio(criteria: IBusquedaComun, req?: any): Promise<HttpResponse<IPersona[]>> {
+    const options = createRequestOption(req);
+    const markets = this.http.post<IPersona[]>(`${this.resourceUrl}/funcionalidad-criterio`, criteria, {
+      params: options,
+      observe: 'response',
+    });
+    return await lastValueFrom(markets);
   }
 
   protected convertDateFromClient<T extends IPersona | NewPersona | PartialUpdatePersona>(persona: T): RestOf<T> {

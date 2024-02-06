@@ -56,6 +56,10 @@ export class PersonaComponent implements OnInit {
     this.load();
   }
 
+  //////////////
+
+  ///////
+
   delete(persona: IPersona): void {
     const modalRef = this.modalService.open(PersonaDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.persona = persona;
