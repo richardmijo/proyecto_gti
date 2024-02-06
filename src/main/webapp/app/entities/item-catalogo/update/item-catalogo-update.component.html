@@ -1,0 +1,134 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-item-catalogo-heading"
+        data-cy="ItemCatalogoCreateUpdateHeading"
+        jhiTranslate="proyectoGtiApp.itemCatalogo.home.createOrEditLabel"
+      >
+        Crear o editar Item Catalogo
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.itemCatalogo.nombre"
+            for="field_nombre"
+            [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.nombre' | translate"
+            >Nombre</label
+          >
+          <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+          @if (editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)) {
+            <div>
+              @if (editForm.get('nombre')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.itemCatalogo.codigo"
+            for="field_codigo"
+            [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.codigo' | translate"
+            >Codigo</label
+          >
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          @if (editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)) {
+            <div>
+              @if (editForm.get('codigo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.itemCatalogo.detalle"
+            for="field_detalle"
+            [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.detalle' | translate"
+            >Detalle</label
+          >
+          <input type="text" class="form-control" name="detalle" id="field_detalle" data-cy="detalle" formControlName="detalle" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.itemCatalogo.catalogCode"
+            for="field_catalogCode"
+            [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.catalogCode' | translate"
+            >Catalog Code</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="catalogCode"
+            id="field_catalogCode"
+            data-cy="catalogCode"
+            formControlName="catalogCode"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.itemCatalogo.habilitado" for="field_habilitado">Habilitado</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="habilitado"
+            id="field_habilitado"
+            data-cy="habilitado"
+            formControlName="habilitado"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.itemCatalogo.catalogo" for="field_catalogo">Catalogo</label>
+          <select
+            class="form-control"
+            id="field_catalogo"
+            data-cy="catalogo"
+            name="catalogo"
+            formControlName="catalogo"
+            [compareWith]="compareCatalogo"
+          >
+            <option [ngValue]="null"></option>
+            @for (catalogoOption of catalogosSharedCollection; track $index) {
+              <option [ngValue]="catalogoOption">{{ catalogoOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

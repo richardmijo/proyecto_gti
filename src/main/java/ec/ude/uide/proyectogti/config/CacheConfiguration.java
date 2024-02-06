@@ -38,6 +38,10 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, ec.ude.uide.proyectogti.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, ec.ude.uide.proyectogti.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, ec.ude.uide.proyectogti.domain.Catalogo.class.getName());
+            createCache(cm, ec.ude.uide.proyectogti.domain.Catalogo.class.getName() + ".itemsCatalogos");
+            createCache(cm, ec.ude.uide.proyectogti.domain.ItemCatalogo.class.getName());
+            createCache(cm, ec.ude.uide.proyectogti.domain.Persona.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

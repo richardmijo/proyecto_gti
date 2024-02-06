@@ -1,0 +1,65 @@
+entity Catalogo {
+    /** nombre del catalogo */
+    nombre String required,
+    /** codigo del catalogo */
+    codigo String required unique,
+    /** descripcion del catalogo */
+    detalle String,
+    habilitado Boolean
+}
+
+/**
+ * The ItemCatalog entity.
+ * @author rfam
+ */
+entity ItemCatalogo {
+    /** nombre del item */
+    nombre String required
+    /** codigo del item */
+    codigo String required unique
+    /** descripcion del item */
+    detalle String
+    /** codigo del catalogo padre */
+    catalogCode String
+    habilitado Boolean
+}
+
+/** contribuyente de mysql*/
+entity Persona {
+/**cedula*/
+	numeroIdentificacion String required unique,
+/**apellidos*/
+	apellidos String,
+    /** nombres*/
+  	nombres String,
+/**nombres y apellidos*/
+	nombre String,
+/**direccion*/
+	direccion String,
+/**fono*/
+	telefonoFijo String,
+/**celular*/
+	telefonoMovil String,
+    
+    fechaNacimiento LocalDate
+    
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Catalogo{itemsCatalogo(nombre)} to ItemCatalogo,
+
+}
+
+relationship ManyToOne {
+    /** estado civil*/
+    Persona{estadoCivil(name) required} to ItemCatalogo,
+    Persona{tipoIdentificacion(name) required} to ItemCatalogo,
+    Persona{paisProcedencia(name) required} to ItemCatalogo,
+    Persona{nivelEducativo(name) required} to ItemCatalogo,
+}
+
+paginate * with pagination
+service all with serviceImpl
+

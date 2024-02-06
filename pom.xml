@@ -827,9 +827,9 @@
                 <!-- default Spring profiles -->
                 <spring.profiles.active>dev${profile.tls}${profile.no-liquibase}</spring.profiles.active>
                 <profile.test>testdev</profile.test>
-                <liquibase-plugin.url>jdbc:postgresql://localhost:5432/proyectoGti</liquibase-plugin.url>
-                <liquibase-plugin.username>proyectoGti</liquibase-plugin.username>
-                <liquibase-plugin.password/>
+                <liquibase-plugin.url>jdbc:postgresql://localhost:5432/proyectogti</liquibase-plugin.url>
+                <liquibase-plugin.username>proyectogti_u</liquibase-plugin.username>
+                <liquibase-plugin.password>proyectogti_u</liquibase-plugin.password>
             </properties>
             <dependencies>
                 <dependency>

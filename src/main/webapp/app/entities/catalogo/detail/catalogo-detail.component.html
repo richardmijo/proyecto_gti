@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (catalogo) {
+      <div>
+        <h2 data-cy="catalogoDetailsHeading"><span jhiTranslate="proyectoGtiApp.catalogo.detail.title">Catalogo</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ catalogo.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.catalogo.nombre" [ngbTooltip]="'proyectoGtiApp.catalogo.help.nombre' | translate"
+              >Nombre</span
+            >
+          </dt>
+          <dd>
+            <span>{{ catalogo.nombre }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.catalogo.codigo" [ngbTooltip]="'proyectoGtiApp.catalogo.help.codigo' | translate"
+              >Codigo</span
+            >
+          </dt>
+          <dd>
+            <span>{{ catalogo.codigo }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.catalogo.detalle" [ngbTooltip]="'proyectoGtiApp.catalogo.help.detalle' | translate"
+              >Detalle</span
+            >
+          </dt>
+          <dd>
+            <span>{{ catalogo.detalle }}</span>
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.catalogo.habilitado">Habilitado</span></dt>
+          <dd>
+            <span>{{ catalogo.habilitado }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/catalogo', catalogo.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

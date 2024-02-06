@@ -1,0 +1,35 @@
+{
+  "proyectoGtiApp": {
+    "itemCatalogo": {
+      "home": {
+        "title": "Item Catalogos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Item Catalogo",
+        "createOrEditLabel": "Create or edit a Item Catalogo",
+        "notFound": "No Item Catalogos found"
+      },
+      "created": "A new Item Catalogo is created with identifier {{ param }}",
+      "updated": "A Item Catalogo is updated with identifier {{ param }}",
+      "deleted": "A Item Catalogo is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Item Catalogo {{ id }}?"
+      },
+      "detail": {
+        "title": "Item Catalogo"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "codigo": "Codigo",
+      "detalle": "Detalle",
+      "catalogCode": "Catalog Code",
+      "habilitado": "Habilitado",
+      "catalogo": "Catalogo",
+      "help": {
+        "nombre": "nombre del item",
+        "codigo": "codigo del item",
+        "detalle": "descripcion del item",
+        "catalogCode": "codigo del catalogo padre"
+      }
+    }
+  }
+}

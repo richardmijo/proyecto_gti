@@ -1,0 +1,282 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-persona-heading" data-cy="PersonaCreateUpdateHeading" jhiTranslate="proyectoGtiApp.persona.home.createOrEditLabel">
+        Crear o editar Persona
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.numeroIdentificacion"
+            for="field_numeroIdentificacion"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.numeroIdentificacion' | translate"
+            >Numero Identificacion</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="numeroIdentificacion"
+            id="field_numeroIdentificacion"
+            data-cy="numeroIdentificacion"
+            formControlName="numeroIdentificacion"
+          />
+          @if (
+            editForm.get('numeroIdentificacion')!.invalid &&
+            (editForm.get('numeroIdentificacion')!.dirty || editForm.get('numeroIdentificacion')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('numeroIdentificacion')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.apellidos"
+            for="field_apellidos"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.apellidos' | translate"
+            >Apellidos</label
+          >
+          <input type="text" class="form-control" name="apellidos" id="field_apellidos" data-cy="apellidos" formControlName="apellidos" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.nombres"
+            for="field_nombres"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.nombres' | translate"
+            >Nombres</label
+          >
+          <input type="text" class="form-control" name="nombres" id="field_nombres" data-cy="nombres" formControlName="nombres" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.nombre"
+            for="field_nombre"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.nombre' | translate"
+            >Nombre</label
+          >
+          <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.direccion"
+            for="field_direccion"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.direccion' | translate"
+            >Direccion</label
+          >
+          <input type="text" class="form-control" name="direccion" id="field_direccion" data-cy="direccion" formControlName="direccion" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.telefonoFijo"
+            for="field_telefonoFijo"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.telefonoFijo' | translate"
+            >Telefono Fijo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefonoFijo"
+            id="field_telefonoFijo"
+            data-cy="telefonoFijo"
+            formControlName="telefonoFijo"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="proyectoGtiApp.persona.telefonoMovil"
+            for="field_telefonoMovil"
+            [ngbTooltip]="'proyectoGtiApp.persona.help.telefonoMovil' | translate"
+            >Telefono Movil</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefonoMovil"
+            id="field_telefonoMovil"
+            data-cy="telefonoMovil"
+            formControlName="telefonoMovil"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.persona.fechaNacimiento" for="field_fechaNacimiento"
+            >Fecha Nacimiento</label
+          >
+          <div class="input-group">
+            <input
+              id="field_fechaNacimiento"
+              data-cy="fechaNacimiento"
+              type="text"
+              class="form-control"
+              name="fechaNacimiento"
+              ngbDatepicker
+              #fechaNacimientoDp="ngbDatepicker"
+              formControlName="fechaNacimiento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaNacimientoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.persona.estadoCivil" for="field_estadoCivil">Estado Civil</label>
+          <select
+            class="form-control"
+            id="field_estadoCivil"
+            data-cy="estadoCivil"
+            name="estadoCivil"
+            formControlName="estadoCivil"
+            [compareWith]="compareItemCatalogo"
+          >
+            @if (!editForm.get('estadoCivil')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (itemCatalogoOption of itemCatalogosSharedCollection; track $index) {
+              <option [ngValue]="itemCatalogoOption">{{ itemCatalogoOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['estadoCivil'])!.invalid && (editForm.get(['estadoCivil'])!.dirty || editForm.get(['estadoCivil'])!.touched)) {
+          <div>
+            @if (editForm.get(['estadoCivil'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.persona.tipoIdentificacion" for="field_tipoIdentificacion"
+            >Tipo Identificacion</label
+          >
+          <select
+            class="form-control"
+            id="field_tipoIdentificacion"
+            data-cy="tipoIdentificacion"
+            name="tipoIdentificacion"
+            formControlName="tipoIdentificacion"
+            [compareWith]="compareItemCatalogo"
+          >
+            @if (!editForm.get('tipoIdentificacion')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (itemCatalogoOption of itemCatalogosSharedCollection; track $index) {
+              <option [ngValue]="itemCatalogoOption">{{ itemCatalogoOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['tipoIdentificacion'])!.invalid &&
+          (editForm.get(['tipoIdentificacion'])!.dirty || editForm.get(['tipoIdentificacion'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['tipoIdentificacion'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.persona.paisProcedencia" for="field_paisProcedencia"
+            >Pais Procedencia</label
+          >
+          <select
+            class="form-control"
+            id="field_paisProcedencia"
+            data-cy="paisProcedencia"
+            name="paisProcedencia"
+            formControlName="paisProcedencia"
+            [compareWith]="compareItemCatalogo"
+          >
+            @if (!editForm.get('paisProcedencia')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (itemCatalogoOption of itemCatalogosSharedCollection; track $index) {
+              <option [ngValue]="itemCatalogoOption">{{ itemCatalogoOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['paisProcedencia'])!.invalid &&
+          (editForm.get(['paisProcedencia'])!.dirty || editForm.get(['paisProcedencia'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['paisProcedencia'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="proyectoGtiApp.persona.nivelEducativo" for="field_nivelEducativo">Nivel Educativo</label>
+          <select
+            class="form-control"
+            id="field_nivelEducativo"
+            data-cy="nivelEducativo"
+            name="nivelEducativo"
+            formControlName="nivelEducativo"
+            [compareWith]="compareItemCatalogo"
+          >
+            @if (!editForm.get('nivelEducativo')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (itemCatalogoOption of itemCatalogosSharedCollection; track $index) {
+              <option [ngValue]="itemCatalogoOption">{{ itemCatalogoOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['nivelEducativo'])!.invalid &&
+          (editForm.get(['nivelEducativo'])!.dirty || editForm.get(['nivelEducativo'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['nivelEducativo'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+{
+  "annotations": {
+    "changelogDate": "20240206144125"
+  },
+  "applications": "*",
+  "entityTableName": "catalogo",
+  "fields": [
+    {
+      "documentation": "nombre del catalogo",
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "documentation": "codigo del catalogo",
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "documentation": "descripcion del catalogo",
+      "fieldName": "detalle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "habilitado",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Catalogo",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "itemCatalogo",
+      "relationshipName": "itemsCatalogo",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

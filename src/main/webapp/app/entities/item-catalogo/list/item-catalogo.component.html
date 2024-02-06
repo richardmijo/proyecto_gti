@@ -1,0 +1,150 @@
+<div>
+  <h2 id="page-heading" data-cy="ItemCatalogoHeading">
+    <span jhiTranslate="proyectoGtiApp.itemCatalogo.home.title">Item Catalogos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="proyectoGtiApp.itemCatalogo.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-item-catalogo"
+        [routerLink]="['/item-catalogo/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="proyectoGtiApp.itemCatalogo.home.createLabel">Crear nuevo Item Catalogo</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (itemCatalogos?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="proyectoGtiApp.itemCatalogo.home.notFound">Ningún Item Catalogos encontrado</span>
+    </div>
+  }
+
+  @if (itemCatalogos && itemCatalogos.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombre">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.nombre">Nombre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="codigo">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.codigo">Codigo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="detalle">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.detalle">Detalle</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="catalogCode">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.catalogCode">Catalog Code</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="habilitado">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.habilitado">Habilitado</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="catalogo.id">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.itemCatalogo.catalogo">Catalogo</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (itemCatalogo of itemCatalogos; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/item-catalogo', itemCatalogo.id, 'view']">{{ itemCatalogo.id }}</a>
+              </td>
+              <td>{{ itemCatalogo.nombre }}</td>
+              <td>{{ itemCatalogo.codigo }}</td>
+              <td>{{ itemCatalogo.detalle }}</td>
+              <td>{{ itemCatalogo.catalogCode }}</td>
+              <td>{{ itemCatalogo.habilitado }}</td>
+              <td>
+                @if (itemCatalogo.catalogo) {
+                  <div>
+                    <a [routerLink]="['/catalogo', itemCatalogo.catalogo.id, 'view']">{{ itemCatalogo.catalogo.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/item-catalogo', itemCatalogo.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/item-catalogo', itemCatalogo.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(itemCatalogo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (itemCatalogos && itemCatalogos.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20240206144225"
+  },
+  "applications": "*",
+  "documentation": "The ItemCatalog entity.\\n@author rfam",
+  "entityTableName": "item_catalogo",
+  "fields": [
+    {
+      "documentation": "nombre del item",
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "documentation": "codigo del item",
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "documentation": "descripcion del item",
+      "fieldName": "detalle",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "codigo del catalogo padre",
+      "fieldName": "catalogCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "habilitado",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "ItemCatalogo",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

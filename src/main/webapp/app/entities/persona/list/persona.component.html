@@ -1,0 +1,213 @@
+<div>
+  <h2 id="page-heading" data-cy="PersonaHeading">
+    <span jhiTranslate="proyectoGtiApp.persona.home.title">Personas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="proyectoGtiApp.persona.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-persona"
+        [routerLink]="['/persona/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="proyectoGtiApp.persona.home.createLabel">Crear nuevo Persona</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (personas?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="proyectoGtiApp.persona.home.notFound">Ningún Personas encontrado</span>
+    </div>
+  }
+
+  @if (personas && personas.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="numeroIdentificacion">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.numeroIdentificacion">Numero Identificacion</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="apellidos">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.apellidos">Apellidos</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombres">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.nombres">Nombres</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombre">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.nombre">Nombre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="direccion">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.direccion">Direccion</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="telefonoFijo">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.telefonoFijo">Telefono Fijo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="telefonoMovil">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.telefonoMovil">Telefono Movil</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fechaNacimiento">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.fechaNacimiento">Fecha Nacimiento</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estadoCivil.name">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.estadoCivil">Estado Civil</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tipoIdentificacion.name">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.tipoIdentificacion">Tipo Identificacion</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="paisProcedencia.name">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.paisProcedencia">Pais Procedencia</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nivelEducativo.name">
+              <div class="d-flex">
+                <span jhiTranslate="proyectoGtiApp.persona.nivelEducativo">Nivel Educativo</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (persona of personas; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/persona', persona.id, 'view']">{{ persona.id }}</a>
+              </td>
+              <td>{{ persona.numeroIdentificacion }}</td>
+              <td>{{ persona.apellidos }}</td>
+              <td>{{ persona.nombres }}</td>
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.direccion }}</td>
+              <td>{{ persona.telefonoFijo }}</td>
+              <td>{{ persona.telefonoMovil }}</td>
+              <td>{{ persona.fechaNacimiento | formatMediumDate }}</td>
+              <td>
+                @if (persona.estadoCivil) {
+                  <div>
+                    <a [routerLink]="['/item-catalogo', persona.estadoCivil.id, 'view']">{{ persona.estadoCivil.nombre }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (persona.tipoIdentificacion) {
+                  <div>
+                    <a [routerLink]="['/item-catalogo', persona.tipoIdentificacion.id, 'view']">{{ persona.tipoIdentificacion.nombre }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (persona.paisProcedencia) {
+                  <div>
+                    <a [routerLink]="['/item-catalogo', persona.paisProcedencia.id, 'view']">{{ persona.paisProcedencia.nombre }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (persona.nivelEducativo) {
+                  <div>
+                    <a [routerLink]="['/item-catalogo', persona.nivelEducativo.id, 'view']">{{ persona.nivelEducativo.nombre }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/persona', persona.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/persona', persona.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(persona)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (personas && personas.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

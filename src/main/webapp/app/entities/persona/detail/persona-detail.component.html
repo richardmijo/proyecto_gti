@@ -1,0 +1,122 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (persona) {
+      <div>
+        <h2 data-cy="personaDetailsHeading"><span jhiTranslate="proyectoGtiApp.persona.detail.title">Persona</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ persona.id }}</span>
+          </dd>
+          <dt>
+            <span
+              jhiTranslate="proyectoGtiApp.persona.numeroIdentificacion"
+              [ngbTooltip]="'proyectoGtiApp.persona.help.numeroIdentificacion' | translate"
+              >Numero Identificacion</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.numeroIdentificacion }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.apellidos" [ngbTooltip]="'proyectoGtiApp.persona.help.apellidos' | translate"
+              >Apellidos</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.apellidos }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.nombres" [ngbTooltip]="'proyectoGtiApp.persona.help.nombres' | translate"
+              >Nombres</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.nombres }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.nombre" [ngbTooltip]="'proyectoGtiApp.persona.help.nombre' | translate">Nombre</span>
+          </dt>
+          <dd>
+            <span>{{ persona.nombre }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.direccion" [ngbTooltip]="'proyectoGtiApp.persona.help.direccion' | translate"
+              >Direccion</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.direccion }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.telefonoFijo" [ngbTooltip]="'proyectoGtiApp.persona.help.telefonoFijo' | translate"
+              >Telefono Fijo</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.telefonoFijo }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.persona.telefonoMovil" [ngbTooltip]="'proyectoGtiApp.persona.help.telefonoMovil' | translate"
+              >Telefono Movil</span
+            >
+          </dt>
+          <dd>
+            <span>{{ persona.telefonoMovil }}</span>
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.persona.fechaNacimiento">Fecha Nacimiento</span></dt>
+          <dd>
+            <span>{{ persona.fechaNacimiento | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.persona.estadoCivil">Estado Civil</span></dt>
+          <dd>
+            @if (persona.estadoCivil) {
+              <div>
+                <a [routerLink]="['/item-catalogo', persona.estadoCivil.id, 'view']">{{ persona.estadoCivil.nombre }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.persona.tipoIdentificacion">Tipo Identificacion</span></dt>
+          <dd>
+            @if (persona.tipoIdentificacion) {
+              <div>
+                <a [routerLink]="['/item-catalogo', persona.tipoIdentificacion.id, 'view']">{{ persona.tipoIdentificacion.nombre }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.persona.paisProcedencia">Pais Procedencia</span></dt>
+          <dd>
+            @if (persona.paisProcedencia) {
+              <div>
+                <a [routerLink]="['/item-catalogo', persona.paisProcedencia.id, 'view']">{{ persona.paisProcedencia.nombre }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.persona.nivelEducativo">Nivel Educativo</span></dt>
+          <dd>
+            @if (persona.nivelEducativo) {
+              <div>
+                <a [routerLink]="['/item-catalogo', persona.nivelEducativo.id, 'view']">{{ persona.nivelEducativo.nombre }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/persona', persona.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

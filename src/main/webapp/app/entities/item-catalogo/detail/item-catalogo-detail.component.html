@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (itemCatalogo) {
+      <div>
+        <h2 data-cy="itemCatalogoDetailsHeading"><span jhiTranslate="proyectoGtiApp.itemCatalogo.detail.title">Item Catalogo</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ itemCatalogo.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.itemCatalogo.nombre" [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.nombre' | translate"
+              >Nombre</span
+            >
+          </dt>
+          <dd>
+            <span>{{ itemCatalogo.nombre }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.itemCatalogo.codigo" [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.codigo' | translate"
+              >Codigo</span
+            >
+          </dt>
+          <dd>
+            <span>{{ itemCatalogo.codigo }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="proyectoGtiApp.itemCatalogo.detalle" [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.detalle' | translate"
+              >Detalle</span
+            >
+          </dt>
+          <dd>
+            <span>{{ itemCatalogo.detalle }}</span>
+          </dd>
+          <dt>
+            <span
+              jhiTranslate="proyectoGtiApp.itemCatalogo.catalogCode"
+              [ngbTooltip]="'proyectoGtiApp.itemCatalogo.help.catalogCode' | translate"
+              >Catalog Code</span
+            >
+          </dt>
+          <dd>
+            <span>{{ itemCatalogo.catalogCode }}</span>
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.itemCatalogo.habilitado">Habilitado</span></dt>
+          <dd>
+            <span>{{ itemCatalogo.habilitado }}</span>
+          </dd>
+          <dt><span jhiTranslate="proyectoGtiApp.itemCatalogo.catalogo">Catalogo</span></dt>
+          <dd>
+            @if (itemCatalogo.catalogo) {
+              <div>
+                <a [routerLink]="['/catalogo', itemCatalogo.catalogo.id, 'view']">{{ itemCatalogo.catalogo.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/item-catalogo', itemCatalogo.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

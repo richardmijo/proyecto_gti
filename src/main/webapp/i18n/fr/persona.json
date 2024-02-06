@@ -1,0 +1,44 @@
+{
+  "proyectoGtiApp": {
+    "persona": {
+      "home": {
+        "title": "Personas",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Persona",
+        "createOrEditLabel": "Créer ou éditer un Persona",
+        "notFound": "Aucun Persona trouvé"
+      },
+      "created": "Un nouveau Persona a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Persona avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Persona avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Persona {{ id }} ?"
+      },
+      "detail": {
+        "title": "Persona"
+      },
+      "id": "ID",
+      "numeroIdentificacion": "Numero Identificacion",
+      "apellidos": "Apellidos",
+      "nombres": "Nombres",
+      "nombre": "Nombre",
+      "direccion": "Direccion",
+      "telefonoFijo": "Telefono Fijo",
+      "telefonoMovil": "Telefono Movil",
+      "fechaNacimiento": "Fecha Nacimiento",
+      "estadoCivil": "Estado Civil",
+      "tipoIdentificacion": "Tipo Identificacion",
+      "paisProcedencia": "Pais Procedencia",
+      "nivelEducativo": "Nivel Educativo",
+      "help": {
+        "numeroIdentificacion": "cedula",
+        "apellidos": "apellidos",
+        "nombres": "nombres",
+        "nombre": "nombres y apellidos",
+        "direccion": "direccion",
+        "telefonoFijo": "fono",
+        "telefonoMovil": "celular"
+      }
+    }
+  }
+}

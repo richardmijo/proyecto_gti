@@ -1,0 +1,89 @@
+{
+  "annotations": {
+    "changelogDate": "20240206144325"
+  },
+  "applications": "*",
+  "documentation": "contribuyente de mysql",
+  "entityTableName": "persona",
+  "fields": [
+    {
+      "documentation": "cedula",
+      "fieldName": "numeroIdentificacion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "documentation": "apellidos",
+      "fieldName": "apellidos",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "nombres",
+      "fieldName": "nombres",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "nombres y apellidos",
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "direccion",
+      "fieldName": "direccion",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "fono",
+      "fieldName": "telefonoFijo",
+      "fieldType": "String"
+    },
+    {
+      "documentation": "celular",
+      "fieldName": "telefonoMovil",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fechaNacimiento",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Persona",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "documentation": "estado civil",
+      "otherEntityField": "name",
+      "otherEntityName": "itemCatalogo",
+      "relationshipName": "estadoCivil",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "itemCatalogo",
+      "relationshipName": "tipoIdentificacion",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "itemCatalogo",
+      "relationshipName": "paisProcedencia",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "itemCatalogo",
+      "relationshipName": "nivelEducativo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
