@@ -185,7 +185,7 @@
             @if (!editForm.get('tipoIdentificacion')!.value) {
               <option [ngValue]="null" selected></option>
             }
-            @for (itemCatalogoOption of itemCatalogosSharedCollection; track $index) {
+            @for (itemCatalogoOption of tipoIdentificacion; track $index) {
               <option [ngValue]="itemCatalogoOption">{{ itemCatalogoOption.nombre }}</option>
             }
           </select>

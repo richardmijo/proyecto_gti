@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICatalogo, NewCatalogo } from '../catalogo.model';
+import { lastValueFrom } from 'rxjs';
 
 export type PartialUpdateCatalogo = Partial<ICatalogo> & Pick<ICatalogo, 'id'>;
 
@@ -72,5 +73,10 @@ export class CatalogoService {
       return [...catalogosToAdd, ...catalogoCollection];
     }
     return catalogoCollection;
+  }
+
+  async obtenerTiposIdentificacion(): Promise<HttpResponse<ICatalogo>> {
+    const data = this.http.get<ICatalogo>(`${this.resourceUrl}/getTiposIdentificacion`, { observe: 'response' });
+    return await lastValueFrom(data);
   }
 }

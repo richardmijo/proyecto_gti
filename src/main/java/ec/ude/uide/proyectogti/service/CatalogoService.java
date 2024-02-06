@@ -6,7 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link ec.ude.uide.proyectogti.domain.Catalogo}.
+ * Service Interface for managing
+ * {@link ec.ude.uide.proyectogti.domain.Catalogo}.
  */
 public interface CatalogoService {
     /**
@@ -55,4 +56,12 @@ public interface CatalogoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get catalogo por codigo.
+     *
+     * @param codigo the id of the entity.
+     * @return the entity.
+     */
+    Catalogo obtenerPorCodigo(String codigo);
 }

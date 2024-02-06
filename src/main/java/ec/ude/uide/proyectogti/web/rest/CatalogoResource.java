@@ -51,7 +51,9 @@ public class CatalogoResource {
      * {@code POST  /catalogos} : Create a new catalogo.
      *
      * @param catalogo the catalogo to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new catalogo, or with status {@code 400 (Bad Request)} if the catalogo has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new catalogo, or with status {@code 400 (Bad Request)} if
+     *         the catalogo has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
@@ -70,11 +72,14 @@ public class CatalogoResource {
     /**
      * {@code PUT  /catalogos/:id} : Updates an existing catalogo.
      *
-     * @param id the id of the catalogo to save.
+     * @param id       the id of the catalogo to save.
      * @param catalogo the catalogo to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated catalogo,
-     * or with status {@code 400 (Bad Request)} if the catalogo is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the catalogo couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated catalogo,
+     *         or with status {@code 400 (Bad Request)} if the catalogo is not
+     *         valid,
+     *         or with status {@code 500 (Internal Server Error)} if the catalogo
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
@@ -102,14 +107,18 @@ public class CatalogoResource {
     }
 
     /**
-     * {@code PATCH  /catalogos/:id} : Partial updates given fields of an existing catalogo, field will ignore if it is null
+     * {@code PATCH  /catalogos/:id} : Partial updates given fields of an existing
+     * catalogo, field will ignore if it is null
      *
-     * @param id the id of the catalogo to save.
+     * @param id       the id of the catalogo to save.
      * @param catalogo the catalogo to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated catalogo,
-     * or with status {@code 400 (Bad Request)} if the catalogo is not valid,
-     * or with status {@code 404 (Not Found)} if the catalogo is not found,
-     * or with status {@code 500 (Internal Server Error)} if the catalogo couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated catalogo,
+     *         or with status {@code 400 (Bad Request)} if the catalogo is not
+     *         valid,
+     *         or with status {@code 404 (Not Found)} if the catalogo is not found,
+     *         or with status {@code 500 (Internal Server Error)} if the catalogo
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
@@ -141,7 +150,8 @@ public class CatalogoResource {
      * {@code GET  /catalogos} : get all the catalogos.
      *
      * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of catalogos in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of catalogos in body.
      */
     @GetMapping("")
     public ResponseEntity<List<Catalogo>> getAllCatalogos(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
@@ -155,7 +165,8 @@ public class CatalogoResource {
      * {@code GET  /catalogos/:id} : get the "id" catalogo.
      *
      * @param id the id of the catalogo to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the catalogo, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the catalogo, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
     public ResponseEntity<Catalogo> getCatalogo(@PathVariable("id") Long id) {
@@ -178,5 +189,18 @@ public class CatalogoResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/getGeneros")
+    public ResponseEntity<Catalogo> getGeneros() {
+        log.debug("REST request to get Catalogo of genres");
+        Catalogo catalogoDTO = catalogoService.obtenerPorCodigo("GENEROS_PERSONA");
+        return ResponseEntity.ok().body(catalogoDTO);
+    }
+
+    @GetMapping("/getTiposIdentificacion")
+    public ResponseEntity<Catalogo> getTiposIdentificacion() {
+        Catalogo catalogoDTO = catalogoService.obtenerPorCodigo("TIPOS_IDENTIFICACION");
+        return ResponseEntity.ok().body(catalogoDTO);
     }
 }

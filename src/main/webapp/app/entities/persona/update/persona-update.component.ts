@@ -12,6 +12,7 @@ import { ItemCatalogoService } from 'app/entities/item-catalogo/service/item-cat
 import { IPersona } from '../persona.model';
 import { PersonaService } from '../service/persona.service';
 import { PersonaFormService, PersonaFormGroup } from './persona-form.service';
+import { CatalogoService } from 'app/entities/catalogo/service/catalogo.service';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ export class PersonaUpdateComponent implements OnInit {
   persona: IPersona | null = null;
 
   itemCatalogosSharedCollection: IItemCatalogo[] = [];
+  tipoIdentificacion: IItemCatalogo[] = [];
 
   editForm: PersonaFormGroup = this.personaFormService.createPersonaFormGroup();
 
@@ -32,12 +34,14 @@ export class PersonaUpdateComponent implements OnInit {
     protected personaFormService: PersonaFormService,
     protected itemCatalogoService: ItemCatalogoService,
     protected activatedRoute: ActivatedRoute,
+    protected catalogoService: CatalogoService,
   ) {}
 
   compareItemCatalogo = (o1: IItemCatalogo | null, o2: IItemCatalogo | null): boolean =>
     this.itemCatalogoService.compareItemCatalogo(o1, o2);
 
   ngOnInit(): void {
+    this.fetchData();
     this.activatedRoute.data.subscribe(({ persona }) => {
       this.persona = persona;
       if (persona) {
@@ -59,6 +63,14 @@ export class PersonaUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.personaService.update(persona));
     } else {
       this.subscribeToSaveResponse(this.personaService.create(persona));
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  private async fetchData() {
+    const _generos = await this.catalogoService.obtenerTiposIdentificacion();
+    if (_generos.body) {
+      this.tipoIdentificacion = _generos.body.itemsCatalogos ?? [];
     }
   }
 

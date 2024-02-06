@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service Implementation for managing {@link ec.ude.uide.proyectogti.domain.Catalogo}.
+ * Service Implementation for managing
+ * {@link ec.ude.uide.proyectogti.domain.Catalogo}.
  */
 @Service
 @Transactional
@@ -81,5 +82,12 @@ public class CatalogoServiceImpl implements CatalogoService {
     public void delete(Long id) {
         log.debug("Request to delete Catalogo : {}", id);
         catalogoRepository.deleteById(id);
+    }
+
+    @Override
+    public Catalogo obtenerPorCodigo(String codigo) {
+        log.debug("Request to get Catalogo por codigo");
+        Catalogo catalogo = catalogoRepository.obtenerCatalogPorCodigo(codigo);
+        return catalogo;
     }
 }
